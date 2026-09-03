@@ -39,7 +39,12 @@ export async function loginApi(body: LoginInput): Promise<AuthResponse> {
     (u) => u.email === body.email && u.password === body.password,
   );
   if (!found) throw new Error("Email atau password salah.");
-  const { password: _, ...user } = found;
+  const user = {
+    id: found.id,
+    email: found.email,
+    name: found.name,
+    role: found.role,
+  };
   const raw = { user, token: "fake-jwt-" + Date.now() };
   return authResponseSchema.parse(raw);
 }

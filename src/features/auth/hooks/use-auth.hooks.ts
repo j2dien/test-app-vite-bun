@@ -30,8 +30,13 @@ export function useRegister() {
   const { setSession } = useAuthStore();
 
   return useMutation({
-    mutationFn: ({ confirmPassword: _, ...data }: RegisterInput) =>
-      registerApi(data),
+    mutationFn: ({
+      confirmPassword,
+      ...payload
+    }: RegisterInput) => {
+      void confirmPassword;
+      return registerApi(payload);
+    },
     onSuccess: ({ user, token }) => {
       setSession(user, token);
       navigate("/dashboard", { replace: true });
