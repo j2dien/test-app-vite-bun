@@ -30,10 +30,7 @@ export function useRegister() {
   const { setSession } = useAuthStore();
 
   return useMutation({
-    mutationFn: ({
-      confirmPassword,
-      ...payload
-    }: RegisterInput) => {
+    mutationFn: ({ confirmPassword, ...payload }: RegisterInput) => {
       void confirmPassword;
       return registerApi(payload);
     },
